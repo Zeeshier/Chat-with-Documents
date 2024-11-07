@@ -6,10 +6,10 @@ from langchain_core.prompts import PromptTemplate
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.prompts import ChatPromptTemplate
 from langchain_core.documents import Document
-from langchain.document_loaders import PyPDFLoader
+from langchain_community.document_loaders import PyPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.embeddings import HuggingFaceEmbeddings
-from langchain.vectorstores import Pinecone
+from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_community.vectorstores import Pinecone
 from operator import itemgetter
 import pinecone
 
@@ -42,7 +42,7 @@ if uploaded_files and google_api_key and pinecone_api_key:
 
     embed_model = HuggingFaceEmbeddings(model_name='BAAI/bge-small-en-v1.5')
     index_name = "ai"
-    pinecone.init(api_key=pinecone_api_key, environment="us-west1-gcp")
+    pinecone.init(api_key=pinecone_api_key, environment="us-east-1")
 
     vector = Pinecone.from_documents(splits, embed_model, index_name=index_name)
     retriever = vector.as_retriever(search_type="similarity", search_kwargs={"k": 3})
